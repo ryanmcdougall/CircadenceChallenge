@@ -8,7 +8,10 @@ export default class Game extends Component {
         super();
 
         this.state = {
-            cards: []
+            cards: [],
+            staged: [],
+            finished: []
+
         }
     }
 
@@ -26,9 +29,13 @@ export default class Game extends Component {
     flipCard(id){
         for(let i = 0; i < this.state.cards.length; i++){
             if(this.state.cards[i].code === id){
-                $('.back-cards').toggleClass('flip')
+                $(`.back`).toggleClass('flip')
+                $('.front').toggleClass('flip')
             }
         }
+        
+        
+       
     }
 
     newGame(){
@@ -42,14 +49,18 @@ export default class Game extends Component {
         })       
     }
 
-    render() {
+    render() { 
+        
+        // const cards = document.querySelectorAll('.back')
+        // cards.forEach(card => card.addEventListener('click', this.flipCard()))
+
+
         let mapped = this.state.cards.map( card => {
             return (
-                <div key={card.code} className='card'>
-                    {/* <div onClick={() => this.flipCard(card.code)}>    */}
-                        <img src={backcard} alt='backcard' className='back'/>
-                        <img src={card.image} alt='frontcard' className='front'/>
-                    {/* </div>  */}
+                <div key={card.code}>
+                    <input type='checkbox' />          
+                    <img src={backcard} onClick={() => this.flipCard(card.code)} alt='backcard' className={`back`}/>
+                    <img src={card.image} onClick={() => this.flipCard(card.code)} alt='frontcard' className='front'/>
                 </div>
             )
         })
@@ -58,7 +69,7 @@ export default class Game extends Component {
 
             <button onClick={() => this.newGame()}>Restart the Game!</button>
           
-            <div className='container'>
+            <div className='game'>
                 <div className='cards'>
                     {mapped}
                 </div>
