@@ -18,7 +18,7 @@ input {
 }
 
 .cards{
-  /* perspective: 1000px; */
+  perspective: 1000px;
   width: 80vw;
   text-align: center;
   background-color: #204E11;
@@ -26,9 +26,9 @@ input {
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-gap: 1em; 
   padding: 50px 15px 50px 15px;
-}
+} 
 
-.back {
+ .back {
   width: 225px;
   position: absolute;
   border-radius: 5%;
@@ -48,10 +48,7 @@ input {
 }
 
 .front.flip {
-  transform: rotateY(-180deg);
+   transform: rotateY(-180deg); 
   transform-style: preserve-3d;
   transition: .7s
-}
-
-
-
+} 

@@ -12,6 +12,9 @@ export default class Game extends Component {
             newCards: []
         }
         this.start = this.start.bind(this)
+        this.handleClick = this.handleClick.bind(this)
+        this.check = this.check.bind(this)
+        this.newGame = this.newGame.bind(this)
     }
 
     componentDidMount(){
