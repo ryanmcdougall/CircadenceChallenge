@@ -57,7 +57,7 @@ export default class Game extends Component {
         }
 
         if(this.state.opened.length === 2){
-            setTimeout(() => this.check(), 750)
+            setTimeout(() => this.check(), 1000)
         }
     }
 
@@ -111,11 +111,10 @@ export default class Game extends Component {
         
         this.state.cards.map( card => {
             console.log("value:", card.value)
-            newCards.push({
+            return newCards.push({
                 card,
                 close: true,
-                complete: false,
-                fail: false
+                complete: false
             })
         });
     
@@ -139,23 +138,17 @@ export default class Game extends Component {
     render() { 
         let mapped = this.state.newCards.map( card => {
             return (
-                <div key={card.card.code} className = {'card' + (!card.close ? ' opened' : '') + (card.completed ? ' matched' : '')} onClick={()=> this.handleClick(card.card.value, card.card.code)}>         
-                    <img src={backcard} alt='backcard' className='back'/>
-                    <img src={card.card.image} className="front" alt=''/>              
+                <div key={card.card.code} className = 'cards' onClick={()=> this.handleClick(card.card.value, card.card.code)}>         
+                    <img src={backcard} alt='backcard' className={'back' + (!card.close ? ' opened' : '') + (card.complete ? ' matched' : '')}/>
+                    <img src={card.card.image} className={'front' + (!card.close ? ' opened' : '') + (card.complete ? ' matched' : '')} alt=''/>              
                 </div>
             )
         })
       return (
-        <div>
-
-            <button onClick={() => this.newGame()}>Restart the Game!</button>
-          
+        <div>          
             <div className='game'>
-                <div className='cards'>
-                    {mapped}
-                </div>
+                {mapped}
             </div>
-
         </div>
       );
     }

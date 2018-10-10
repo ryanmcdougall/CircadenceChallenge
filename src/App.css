@@ -3,52 +3,54 @@ html {
 
 }
 
-input {
-  display: none;
-}
-
 .game {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  width: 100vw;
+  width: 85vw;
   height: 100%;
-  padding: 100px 0 100px 0;
-  perspective: 5000px;
+  padding: 100px;
 }
 
 .cards{
-  perspective: 1000px;
-  width: 80vw;
+  width: 25%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
   text-align: center;
-  background-color: #204E11;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-gap: 1em; 
-  padding: 50px 15px 50px 15px;
-} 
+  background-color: #204E11; 
+  padding: 50px 0 50px;
+  
+}
 
- .back {
+.front{
   width: 225px;
+  height: 315px;
+  transform: rotateY(90deg);
+  transition: .5s ease-in;
+  z-index: 0
+}
+
+.front.opened{
+  transform: rotateY(0deg);
+  transition: .5s ease-in 
+}
+
+.back{
+  width: 225px;
+  height: 315px;
   position: absolute;
-  border-radius: 5%;
-  transform-style: preserve-3d;
+  border-radius: 3%;
   cursor: pointer;
+  z-index: 1;
 }
 
-.back:hover {
-    transform: rotateY(10deg);
-    box-shadow: 0 20px 20px rgba(2, 1, 1, 0.2);
+.back.opened{
+  transform: rotateY(90deg);
+  transition: .35s ease-in 
 }
 
-.back.flip {
-  transform: rotateY(180deg);
-  transform-style: preserve-3d;
-  transition: .7s
+.matched{
+ visibility: hidden
 }
 
-.front.flip {
-   transform: rotateY(-180deg); 
-  transform-style: preserve-3d;
-  transition: .7s
-} 
