@@ -14,18 +14,18 @@ export default class Game extends Component {
         this.start = this.start.bind(this)
         this.handleClick = this.handleClick.bind(this)
         this.check = this.check.bind(this)
-        this.newGame = this.newGame.bind(this)
+        
     }
 
     componentDidMount(){
         fetch('https://deckofcardsapi.com/api/deck/new/draw/?count=52').then( res => res.json())
             .then( data => {
-                console.log(data.cards)
+                console.log('Our Fetched Data = ', data.cards)
                 
                 this.setState({
                     cards: data.cards
                 })
-                console.log(this.state.cards)
+                console.log("this.state.cards = ", this.state.cards)
                 this.start()
         })
     }
@@ -56,8 +56,10 @@ export default class Game extends Component {
             })
         }
 
+
         if(this.state.opened.length === 2){
-            setTimeout(() => this.check(), 1000)
+            setTimeout(() => this.check(), 750)
+           
         }
     }
 
@@ -69,44 +71,52 @@ export default class Game extends Component {
 
         console.log(opened)
 
-        if(opened[0].value === opened[1].value && opened[0].code !== opened[1].code){
-            for(let i = 0; i < newCards.length; i++){
-                if(newCards[i].card.code === opened[0].code){
-                    index1 = i;
-                } else if (newCards[i].card.code === opened[1].code){
-                    index2 = i
-                } 
-            }
-            console.log("they match!!!")
-                console.log("index1:::::", index1, "index2:::::", index2)
-                newCards[index1].complete = true
-                newCards[index2].complete = true
+        setTimeout(() => {
+            if(this.state.opened.length > 2){
+            return ;
+        
         } else {
 
-            let index1 = 0;
-            let index2 = 0;
-            
-            for(let i = 0; i < newCards.length; i++){
-                if(newCards[i].card.code === opened[0].code){
-                    index1 = i;
-                } else if (newCards[i].card.code === opened[1].code){
-                    index2 = i
-                } 
+            if(opened[0].value === opened[1].value && opened[0].code !== opened[1].code){
+                for(let i = 0; i < newCards.length; i++){
+                    if(newCards[i].card.code === opened[0].code){
+                        index1 = i;
+                    } else if (newCards[i].card.code === opened[1].code){
+                        index2 = i
+                    } 
+                }
+                console.log("They match!")
+                console.log("index1 = ", index1, "index2 = ", index2)
+                newCards[index1].complete = true
+                newCards[index2].complete = true
+            } else {
+                
+                let index1 = 0;
+                let index2 = 0;
+                
+                for(let i = 0; i < newCards.length; i++){
+                    if(newCards[i].card.code === opened[0].code){
+                        index1 = i;
+                    } else if (newCards[i].card.code === opened[1].code){
+                        index2 = i
+                    } 
+                }
+                console.log("No match")
+                console.log("Index 1 & 2 = ", index1, ' ', index2)
+                
+                newCards[index1].close = true
+                newCards[index2].close = true
             }
-            console.log("no match :(")
-            console.log("Index 1 & 2 ::::::", index1, index2)
             
-            newCards[index1].close = true
-            newCards[index2].close = true
+            this.setState({
+                opened: [],
+                newCards
+            })
         }
-
-        this.setState({
-            opened: [],
-            newCards
-        })
+        }, 750)
     }
-
-    start(){
+        
+        start(){
         let newCards = []
         
         this.state.cards.map( card => {
@@ -121,19 +131,9 @@ export default class Game extends Component {
         this.setState({
             newCards: newCards
         })
-        console.log(this.state.newCards)
+        console.log('newCards w/ values = ', newCards)
     }    
 
-    newGame(){
-        fetch('https://deckofcardsapi.com/api/deck/new/draw/?count=52').then( res => res.json())
-            .then( data => {
-                console.log(data.cards)
-            
-                this.setState({
-                    cards: data.cards
-                })
-        })       
-    }
 
     render() { 
         let mapped = this.state.newCards.map( card => {
