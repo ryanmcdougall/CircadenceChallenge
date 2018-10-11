@@ -13,8 +13,7 @@ export default class Game extends Component {
         }
         this.start = this.start.bind(this)
         this.handleClick = this.handleClick.bind(this)
-        this.check = this.check.bind(this)
-        
+        this.check = this.check.bind(this)        
     }
 
     componentDidMount(){
@@ -72,8 +71,8 @@ export default class Game extends Component {
         console.log(opened)
 
         setTimeout(() => {
-            if(this.state.opened.length > 2){
-            return ;
+            if(this.state.opened.length !== 2){
+                return ;
         
         } else {
 
